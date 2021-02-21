@@ -64,6 +64,8 @@ export const CREATE_PAGES = 'CREATE_PAGES';
 // selectors
 export const getVideoList = state => state.videoList;
 export const getPageVideos = state => state.pageVideos;
+export const getCurrentPage = state => state.currentPage;
+export const getTotalPage = state => state.totalPage;
 
 // action creator
 export function fetchVideoListCreator() {
