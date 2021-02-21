@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Pagination from "./components/Pagination";
+import VideoList from "./components/VideoList";
 
 import { fetchVideoListCreator, getPageVideos } from "./store";
 
@@ -18,7 +19,7 @@ const App = () => {
 	return (
 		<main>
 			<section className="list-section">
-				media list
+				<VideoList />
 			</section>
 			<section className="pagination-section">
 				<Pagination />
