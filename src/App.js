@@ -1,10 +1,29 @@
-import React from "react";
+//nextPageToken https://stackoverflow.com/questions/14173428/how-to-change-page-results-with-youtube-data-api-v3
+
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import Pagination from "./components/Pagination";
+
+import { fetchVideoListCreator, getPageVideos } from "./store";
 
 const App = () => {
+	const dispatch = useDispatch();
+	const pageVideos = useSelector(getPageVideos);
+
+	useEffect(() => {
+		dispatch(fetchVideoListCreator());
+	}, []);
+
 	return (
-		<div>
-			123
-		</div>
+		<main>
+			<section className="list-section">
+				media list
+			</section>
+			<section className="pagination-section">
+				<Pagination />
+			</section>
+		</main>
 	)
 }
 
