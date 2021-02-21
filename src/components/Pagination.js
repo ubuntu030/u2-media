@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getCurrentPage, getTotalPage } from "../store";
-import { updateCurrentPage } from "../store";
+import { updateCurrentPage, updatePageVideosCreator } from "../store";
 import "./pagination.scss";
 
 const Pagination = () => {
@@ -12,6 +12,7 @@ const Pagination = () => {
 
 	const handleItemClick = (pageNum) => {
 		dispatch(updateCurrentPage(pageNum));
+		dispatch(updatePageVideosCreator(pageNum));
 	}
 
 
