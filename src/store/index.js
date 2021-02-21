@@ -12,7 +12,9 @@ const initialState = {
 	perPageNum: 12,
 	totalPage: 0
 };
-
+/**
+ * reducer
+ */
 const rootReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case FETCH_VIDEO_LIST_PADDING:
@@ -39,6 +41,9 @@ const rootReducer = (state = initialState, action) => {
 			// console.log('total page', totalpage);
 			return { ...state, totalPage: num }
 		}
+		case UPDATE_CURRENT_PAGE:
+			console.log('current page', action.payload);
+			return { ...state, currentPage: action.payload }
 		case UPDATE_PAGE_VIDEOS: {
 			const { currentPage, perPageNum } = state;
 			const multiPage = currentPage * perPageNum;
@@ -54,20 +59,27 @@ const rootReducer = (state = initialState, action) => {
 	}
 }
 
-// actions
+/**
+ * actions
+ */
 export const FETCH_VIDEO_LIST_PADDING = 'FETCH_VIDEO_LIST_PADDING';
 export const FETCH_VIDEO_LIST_SUCCESS = 'FETCH_VIDEO_LIST_SUCCESS';
 export const FETCH_VIDEO_LIST_ERROR = 'FETCH_VIDEO_LIST_ERROR';
 export const UPDATE_PAGE_VIDEOS = 'UPDATE_PAGE_VIDEOS';
 export const CREATE_PAGES = 'CREATE_PAGES';
+export const UPDATE_CURRENT_PAGE = 'UPDATE_CURRENT_PAGE';
 
-// selectors
+/**
+ * selectors
+ */
 export const getVideoList = state => state.videoList;
 export const getPageVideos = state => state.pageVideos;
 export const getCurrentPage = state => state.currentPage;
 export const getTotalPage = state => state.totalPage;
 
-// action creator
+/**
+ * action creator
+ */
 export function fetchVideoListCreator() {
 	return (dispatch, getState) => {
 		dispatch({
@@ -108,6 +120,14 @@ export function updatePageVideosCreator(currentPage, getState) {
 		})
 	}
 }
+// 更新當前處於的頁數
+export const updateCurrentPage = pageNum => {
+	return {
+		type: UPDATE_CURRENT_PAGE,
+		payload: pageNum
+	}
+}
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

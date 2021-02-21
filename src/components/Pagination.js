@@ -2,25 +2,33 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getCurrentPage, getTotalPage } from "../store";
+import { updateCurrentPage } from "../store";
 import "./pagination.scss";
 
 const Pagination = () => {
+	const dispatch = useDispatch();
 	const currentPage = useSelector(getCurrentPage);
 	const totalPageNum = useSelector(getTotalPage);
+
+	const handleItemClick = (pageNum) => {
+		dispatch(updateCurrentPage(pageNum));
+	}
+
+
 	return (
 		<nav className="pagination-container">
 			<ul className="list">
-				{createItem(totalPageNum)}
+				{createItem(handleItemClick, totalPageNum)}
 			</ul>
 		</nav>
 	)
 }
 
-const createItem = (totalPageNum = 0) => {
+const createItem = (handleItemClick, totalPageNum = 0) => {
 	let itemElms = [];
 	for (let index = 0; index < totalPageNum; index++) {
 		itemElms.push(
-			<li className="item" key={index}>
+			<li className="item" key={index} onClick={() => handleItemClick(index + 1)}>
 				<a href="#">{index + 1}</a>
 			</li>
 		)
