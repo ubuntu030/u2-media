@@ -1,0 +1,28 @@
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+
+    .item {
+      display: list-item;
+      border: 1px solid rgb(56, 61, 63);
+      height: 40px;
+      width: 40px;
+      margin: 0 1px;
+      cursor: pointer;
+
+      a {
+        font-size: 16px;
+        text-decoration: none;
+        color: black;
+				margin: auto;
+      }
+    }
+  }
+}
