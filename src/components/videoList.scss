@@ -1,0 +1,30 @@
+.video-list-container {
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    height: 100%;
+    width: 100%;
+		 word-wrap:break-word;
+    li.card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 400px;
+      width: 400px;
+			word-wrap:break-word;
+      .card-img {}
+
+      .card-title {}
+
+      .card-desc {}
+    }
+  }
+}
