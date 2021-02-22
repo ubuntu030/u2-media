@@ -5,10 +5,10 @@
   transition: all .3s ease;
   width: 100vw;
   height: 100vh;
-  background: rgba($color: #505050, $alpha: 0.5);
+  background: rgba($color: #505050, $alpha: 0.8);
   backdrop-filter: blur(3px);
   color: white;
-	z-index: 2;
+  z-index: 2;
 
   &.hidden {
     display: none;
@@ -29,8 +29,8 @@
 
 .favorite-display-icon {
   position: fixed;
-  top: 0;
-  left: 0;
+  bottom: 0;
+  right: 0;
   cursor: pointer;
   color: white;
   z-index: 3;
