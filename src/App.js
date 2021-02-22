@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Pagination from "./components/Pagination";
 import VideoList from "./components/VideoList";
+import FavoriteList from "./components/FavoriteList";
 
 import { fetchVideoListCreator, getPageVideos } from "./store";
 
@@ -24,6 +25,7 @@ const App = () => {
 			<section className="pagination-section">
 				<Pagination />
 			</section>
+			<FavoriteList />
 		</main>
 	)
 }
