@@ -15,11 +15,11 @@ const VideoList = () => {
 	}
 	return (
 		<div className="video-list-container">
-			<ul>
+			<div className="gallery">
 				{
 					videoList.map(info => <Card key={info.id} info={info} favoriteCb={handleAddFavorite} />)
 				}
-			</ul>
+			</div>
 		</div>
 	)
 }
@@ -28,18 +28,18 @@ const Card = (props) => {
 	const { id, title, description, thumbnails } = props.info;
 	const { favoriteCb } = props;
 	return (
-		<li className="card">
+		<div className="card">
 			<div className="card-img">
 				<img src={thumbnails.url} alt={title} />
-				<button onClick={() => favoriteCb(props.info)}>favorite</button>
+				<button className="like-btn" onClick={() => favoriteCb(props.info)}>favorite</button>
 			</div>
 			<div className="card-title">
-				<p>{title}</p>
+				<h4>{title}</h4>
 			</div>
 			<div className="card-desc">
 				<p>{description}</p>
 			</div>
-		</li>
+		</div>
 	)
 }
 
