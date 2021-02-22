@@ -59,6 +59,13 @@ const rootReducer = (state = initialState, action) => {
 		case ADD_FAVORITE:
 			const { payload } = action;
 			return { ...state, favoriteList: { ...state.favoriteList, [payload.id]: payload } }
+		case DEL_FAVORITE: {
+			// https://stackoverflow.com/questions/34401098/remove-a-property-in-an-object-immutably
+			const id = action.payload;
+			let { [id]: value, ...restObj } = state.favoriteList;
+			// console.log(restObj);
+			return { ...state, favoriteList: restObj };
+		}
 		case SET_FAVORITE_DISPLAY:
 			return { ...state, isFavoriteOpen: action.payload }
 		default:
@@ -76,7 +83,7 @@ export const UPDATE_PAGE_VIDEOS = 'UPDATE_PAGE_VIDEOS';
 export const CREATE_PAGES = 'CREATE_PAGES';
 export const UPDATE_CURRENT_PAGE = 'UPDATE_CURRENT_PAGE';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
-export const DEL_FAVORITE = 'ADD_FAVORITE';
+export const DEL_FAVORITE = 'DEL_FAVORITE';
 export const SET_FAVORITE_DISPLAY = 'SET_FAVORITE_DISPLAY';
 
 /**
@@ -146,10 +153,10 @@ export const addFavorite = item => {
 		payload: item
 	}
 }
-export const delFavorite = item => {
+export const delFavorite = id => {
 	return {
 		type: DEL_FAVORITE,
-		payload: item
+		payload: id
 	}
 }
 export const setFavoriteDisplay = (isShow = false) => {
