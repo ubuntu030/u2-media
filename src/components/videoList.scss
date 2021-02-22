@@ -13,6 +13,8 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
     .card {
+      display: flex;
+      flex-direction: column;
       word-break: break-word;
       padding: 2px;
       margin: 2px;
@@ -35,7 +37,9 @@
           cursor: pointer;
         }
       }
-
+      .card-desc {
+        flex: 1;
+      }
       .tool-bar {
         display: flex;
         align-items: center;
