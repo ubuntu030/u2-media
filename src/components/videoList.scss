@@ -6,20 +6,56 @@
   display: flex;
   flex-direction: row;
 
+
+  .gallery {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    .card {
+      word-break: break-word;
+      padding: 2px;
+      margin: 2px;
+
+      // box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.4);
+      .card-img {
+        position: relative;
+
+        img {
+          width: 100%;
+          cursor: pointer;
+        }
+
+        .like-btn {
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 1;
+          cursor: pointer;
+        }
+      }
+
+    }
+  }
+
+
   ul {
     display: flex;
     flex-direction: column;
     list-style: none;
     height: 100%;
     width: 100%;
-		 word-wrap:break-word;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+
     li.card {
       position: relative;
       display: flex;
       flex-direction: column;
       height: 400px;
       width: 400px;
-			word-wrap:break-word;
+      word-wrap: break-word;
+
       .card-img {}
 
       .card-title {}
