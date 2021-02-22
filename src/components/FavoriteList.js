@@ -20,7 +20,7 @@ const FavoriteList = () => {
 	return (
 		<>
 			<div onClick={handleDisplayClick} className="favorite-display-icon">
-				Favorite!
+				<img src={`src/public/${isOpen ? 'gray' : 'red'}-favorite-database-48.png`} alt="favorite-database" />
 			</div>
 			<section className={`favorite-list-container ${isOpen ? '' : 'hidden'}`}>
 				<div className="favorite-list" >
