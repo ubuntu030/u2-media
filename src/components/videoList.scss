@@ -24,7 +24,7 @@
 
         img {
           width: 100%;
-          cursor: pointer;
+          // cursor: pointer;
         }
 
         .like-btn {
@@ -36,6 +36,16 @@
         }
       }
 
+      .tool-bar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        img {
+          height: 40px;
+          cursor: pointer;
+        }
+      }
     }
   }
 
