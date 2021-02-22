@@ -59,6 +59,8 @@ const rootReducer = (state = initialState, action) => {
 		case ADD_FAVORITE:
 			const { payload } = action;
 			return { ...state, favoriteList: { ...state.favoriteList, [payload.id]: payload } }
+		case SET_FAVORITE_DISPLAY:
+			return { ...state, isFavoriteOpen: action.payload }
 		default:
 			return state;
 	}
@@ -75,6 +77,7 @@ export const CREATE_PAGES = 'CREATE_PAGES';
 export const UPDATE_CURRENT_PAGE = 'UPDATE_CURRENT_PAGE';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DEL_FAVORITE = 'ADD_FAVORITE';
+export const SET_FAVORITE_DISPLAY = 'SET_FAVORITE_DISPLAY';
 
 /**
  * selectors
@@ -84,6 +87,7 @@ export const getPageVideos = state => state.pageVideos;
 export const getCurrentPage = state => state.currentPage;
 export const getTotalPage = state => state.totalPage;
 export const getFavoriteList = state => state.favoriteList;
+export const getIsFavoriteOpen = state => state.isFavoriteOpen;
 
 /**
  * action creator
@@ -146,6 +150,12 @@ export const delFavorite = item => {
 	return {
 		type: DEL_FAVORITE,
 		payload: item
+	}
+}
+export const setFavoriteDisplay = (isShow = false) => {
+	return {
+		type: SET_FAVORITE_DISPLAY,
+		payload: isShow
 	}
 }
 
