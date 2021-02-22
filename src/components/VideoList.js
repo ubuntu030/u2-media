@@ -1,17 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { getPageVideos } from "../store";
+import { getPageVideos, addFavorite } from "../store";
 
 import "./videoList.scss";
 
 const VideoList = () => {
+	const dispatch = useDispatch();
 	const videoList = useSelector(getPageVideos);
+
+	const handleAddFavorite = (item) => {
+		// console.log(item);
+		dispatch(addFavorite(item));
+	}
 	return (
 		<div className="video-list-container">
 			<ul>
 				{
-					videoList.map(info => <Card key={info.id} info={info} />)
+					videoList.map(info => <Card key={info.id} info={info} favoriteCb={handleAddFavorite} />)
 				}
 			</ul>
 		</div>
@@ -20,9 +26,13 @@ const VideoList = () => {
 
 const Card = (props) => {
 	const { id, title, description, thumbnails } = props.info;
+	const { favoriteCb } = props;
 	return (
 		<li className="card">
-			<img src={thumbnails.url} alt={title} className="card-img" />
+			<div className="card-img">
+				<img src={thumbnails.url} alt={title} />
+				<button onClick={() => favoriteCb(props.info)}>favorite</button>
+			</div>
 			<div className="card-title">
 				<p>{title}</p>
 			</div>
