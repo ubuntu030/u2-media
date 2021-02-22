@@ -10,7 +10,9 @@ const initialState = {
 	nextPageToken: '',
 	currentPage: 1,
 	perPageNum: 12,
-	totalPage: 0
+	totalPage: 0,
+	favoriteList: {},
+	isFavoriteOpen: false
 };
 /**
  * reducer
@@ -54,6 +56,9 @@ const rootReducer = (state = initialState, action) => {
 			console.log('[pageVideos]', pageVideos);
 			return { ...state, pageVideos: pageVideos }
 		}
+		case ADD_FAVORITE:
+			const { payload } = action;
+			return { ...state, favoriteList: { ...state.favoriteList, [payload.id]: payload } }
 		default:
 			return state;
 	}
@@ -68,6 +73,8 @@ export const FETCH_VIDEO_LIST_ERROR = 'FETCH_VIDEO_LIST_ERROR';
 export const UPDATE_PAGE_VIDEOS = 'UPDATE_PAGE_VIDEOS';
 export const CREATE_PAGES = 'CREATE_PAGES';
 export const UPDATE_CURRENT_PAGE = 'UPDATE_CURRENT_PAGE';
+export const ADD_FAVORITE = 'ADD_FAVORITE';
+export const DEL_FAVORITE = 'ADD_FAVORITE';
 
 /**
  * selectors
@@ -76,6 +83,7 @@ export const getVideoList = state => state.videoList;
 export const getPageVideos = state => state.pageVideos;
 export const getCurrentPage = state => state.currentPage;
 export const getTotalPage = state => state.totalPage;
+export const getFavoriteList = state => state.favoriteList;
 
 /**
  * action creator
@@ -127,7 +135,19 @@ export const updateCurrentPage = pageNum => {
 		payload: pageNum
 	}
 }
-
+// 新增最愛
+export const addFavorite = item => {
+	return {
+		type: ADD_FAVORITE,
+		payload: item
+	}
+}
+export const delFavorite = item => {
+	return {
+		type: DEL_FAVORITE,
+		payload: item
+	}
+}
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
