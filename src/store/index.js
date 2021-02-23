@@ -1,8 +1,12 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import { throttle } from "lodash";
 
+
+import { loadState, saveState } from "../localStorage";
 import { fetchVideoList } from "../u2_api";
 
+const persistedState = loadState();
 const initialState = {
 	loading: false,
 	videoList: [],
@@ -257,6 +261,17 @@ export const updateVideoInfo = (info) => {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
 	rootReducer,
-	composeEnhancers(applyMiddleware(thunk)
-	));
+	{
+		...initialState,
+		...persistedState
+	},
+	composeEnhancers(applyMiddleware(thunk))
+);
+
+store.subscribe(throttle(() => {
+	saveState({
+		favoriteList: store.getState().favoriteList
+	});
+}, 1000));
+
 export default store;
