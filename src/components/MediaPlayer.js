@@ -1,6 +1,9 @@
 // https://stackoverflow.com/questions/56765427/question-in-the-input-type-range-and-javascript-to-design-the-video-player
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import videojs from 'video.js';
+
+import { getIsPlayerOpen, setPlayerDisplay } from "../store";
 
 import "video.js/dist/video-js.css";
 import "./mediaplayer.scss"
@@ -42,6 +45,8 @@ const VideoPlayer = (props) => {
 
 const MediaPlayer = () => {
 	const [showAd, setShowAd] = useState(false);
+	const dispatch = useDispatch();
+	const isShow = useSelector(getIsPlayerOpen);
 	const videoJsOptions = {
 		autoplay: true,
 		controls: true,
@@ -50,27 +55,34 @@ const MediaPlayer = () => {
 		}]
 	}
 
-	const play = ()=> {
+	const play = () => {
 		if (videoPlayer && typeof videoPlayer.play === 'function') {
 			videoPlayer.play();
 		}
 	}
+	const close = () => {
+		dispatch(setPlayerDisplay(false));
+	}
+
 
 	return (
-
-		<main className="media-player-container">
-			<div className="album-pic">
-				<div onClick={play} className={`video-advertise ${showAd ? '' : 'hidden'}`}>
-					<div className="content">
-						<img src="src/public/advitise_img.jpg" alt="advitise-img" />
-						<p className="ad-title">
-							覺得人生不順利嗎？照照鏡子你就知道原因了。
-						</p>
-					</div>
+		isShow ?
+			<main className="media-player-container">
+				<div className="control-bar">
+					<img onClick={close} src="src/public/macos-close.png" alt="macos-close"/>
 				</div>
-				<VideoPlayer {...videoJsOptions} setShowAd={setShowAd} />
-			</div>
-		</main>
+				<div className="album-pic">
+					<div onClick={play} className={`video-advertise ${showAd ? '' : 'hidden'}`}>
+						<div className="content">
+							<img src="src/public/advitise_img.jpg" alt="advitise-img" />
+							<p className="ad-title">
+								覺得人生不順利嗎？照照鏡子你就知道原因了。
+						</p>
+						</div>
+					</div>
+					<VideoPlayer {...videoJsOptions} setShowAd={setShowAd} />
+				</div>
+			</main> : null
 	)
 }
 
