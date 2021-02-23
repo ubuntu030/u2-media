@@ -91,6 +91,34 @@ const rootReducer = (state = initialState, action) => {
 				favoriteList: restObj
 			};
 		}
+		case TOGGLE_FAVORITE: {
+			const { payload } = action;
+			let isLike;
+
+			const nList = state.videoList.map(item => {
+				if (payload.id === item.id) {
+					item.like = !item.like;
+					isLike = item.like;
+				}
+				return item;
+			});
+			let value, restObj;
+			if (!isLike) {
+				({ [payload.id]: value, ...restObj } = state.favoriteList);
+				return {
+					...state,
+					videoList: [...nList],
+					favoriteList: restObj
+				};
+			}
+
+			// TODO: 優化並避免維護兩分資料
+			return {
+				...state,
+				videoList: [...nList],
+				favoriteList: { ...state.favoriteList, [payload.id]: payload }
+			}
+		}
 		case SET_FAVORITE_DISPLAY:
 			return { ...state, isFavoriteOpen: action.payload }
 		case SET_PLAYER_DISPLAY:
@@ -113,6 +141,7 @@ export const CREATE_PAGES = 'CREATE_PAGES';
 export const UPDATE_CURRENT_PAGE = 'UPDATE_CURRENT_PAGE';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DEL_FAVORITE = 'DEL_FAVORITE';
+export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
 export const SET_FAVORITE_DISPLAY = 'SET_FAVORITE_DISPLAY';
 export const SET_PLAYER_DISPLAY = 'SET_PLAYER_DISPLAY';
 export const UPDATE_VIDEO_INFO = 'UPDATE_VIDEO_INFO';
@@ -189,6 +218,12 @@ export const addFavorite = item => {
 export const delFavorite = id => {
 	return {
 		type: DEL_FAVORITE,
+		payload: id
+	}
+}
+export const toggleFavorite = id => {
+	return {
+		type: TOGGLE_FAVORITE,
 		payload: id
 	}
 }
