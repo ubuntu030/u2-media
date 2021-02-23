@@ -7,6 +7,7 @@ import Pagination from "./components/Pagination";
 import VideoList from "./components/VideoList";
 import FavoriteList from "./components/FavoriteList";
 import MediaPlayer from "./components/MediaPlayer";
+import SearchBar from "./components/SearchBar";
 
 import { fetchVideoListCreator, getPageVideos } from "./store";
 
@@ -28,6 +29,7 @@ const App = () => {
 			</section>
 			<FavoriteList />
 			<MediaPlayer />
+			<SearchBar />
 		</main>
 	)
 }
