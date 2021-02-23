@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { throttle } from "lodash";
 
-import { convert_time } from "../utils";
+import { convert_time, timeFormat } from "../utils";
 
 
 import { loadState, saveState } from "../localStorage";
@@ -199,7 +199,7 @@ export function fetchVideoListCreator() {
 				const newItem = result.items.map(item => {
 					videoId = item.id.videoId;
 					duration = sortByKey[videoId].contentDetails.duration;
-					item.duration_formate = convert_time(duration);
+					item.duration_formate = timeFormat(convert_time(duration));
 					item.duration = duration;
 					return item;
 				});
