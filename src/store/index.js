@@ -29,15 +29,20 @@ const rootReducer = (state = initialState, action) => {
 			return { ...state, loading: true };
 		case FETCH_VIDEO_LIST_SUCCESS: {
 			const { items, nextPageToken } = action.payload;
+			const favoriteKeys = Object.keys(state.favoriteList);
 			let snippet = null;
+			let initLike = false;
+			let id = '';
 			const videoList = items.map(item => {
 				snippet = item.snippet;
+				id = item.id.videoId;
+				initLike = (favoriteKeys.find(elm => elm === id)) ? true : false;
 				return {
-					id: item.id.videoId,
+					id: id,
 					title: snippet.title,
 					description: snippet.description,
 					thumbnails: snippet.thumbnails.medium,
-					like: false
+					like: initLike
 				}
 			});
 			// console.log(videoList);
