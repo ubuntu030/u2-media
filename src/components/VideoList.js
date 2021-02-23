@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getPageVideos, addFavorite, setPlayerDisplay, updateVideoInfo } from "../store";
+import { getPageVideos, addFavorite, updatePageVideosCreator, setPlayerDisplay, updateVideoInfo, getCurrentPage } from "../store";
 
 import IframWindow from "./IframWindow";
 import "./videoList.scss";
@@ -9,12 +9,14 @@ import "./videoList.scss";
 const VideoList = () => {
 	const dispatch = useDispatch();
 	const videoList = useSelector(getPageVideos);
+	const currentPage = useSelector(getCurrentPage);
 	const [isShowIfram, setIsShowIfram] = useState(false);
 	const [videoId, setVideoId] = useState('');
 
 	const handleAddFavorite = (item) => {
 		// console.log(item);
 		dispatch(addFavorite(item));
+		dispatch(updatePageVideosCreator(currentPage));
 	}
 	const openIfram = id => {
 		setVideoId(id);
@@ -41,13 +43,14 @@ const VideoList = () => {
 }
 
 const Card = (props) => {
-	const { id, title, description, thumbnails } = props.info;
+	const { id, title, description, thumbnails, like } = props.info;
 	const { favoriteCb, openIframCb, openPlayerCb } = props;
 	return (
 		<div className="card">
 			<div className="card-img">
 				<img src={thumbnails.url} alt={title} />
-				<button className="like-btn" onClick={() => favoriteCb(props.info)}>favorite</button>
+				<img className="like-btn" onClick={() => favoriteCb(props.info)} src={`src/public/${like ? 'red-love.png' : 'gray-love.png'}`} alt="" />
+				{/* <button className="like-btn" onClick={() => favoriteCb(props.info)}>favorite</button> */}
 			</div>
 			<div className="card-title">
 				<h4>{title}</h4>

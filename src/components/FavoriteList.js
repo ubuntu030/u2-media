@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import IframWindow from "./IframWindow";
 
-import { getFavoriteList, getIsFavoriteOpen } from "../store";
-import { setFavoriteDisplay, delFavorite, setPlayerDisplay, updateVideoInfo } from "../store";
+import { getFavoriteList, getIsFavoriteOpen, getCurrentPage } from "../store";
+import { setFavoriteDisplay, delFavorite, setPlayerDisplay, updateVideoInfo, updatePageVideosCreator } from "../store";
 
 import "./favoriteList.scss"
 
@@ -14,11 +14,13 @@ const FavoriteList = () => {
 	const [videoId, setVideoId] = useState('');
 	const favoriteList = useSelector(getFavoriteList);
 	const isOpen = useSelector(getIsFavoriteOpen);
+	const currentPage = useSelector(getCurrentPage);
 	const handleDisplayClick = () => {
 		dispatch(setFavoriteDisplay(!isOpen));
 	}
 	const delFavoriteCb = (id) => {
 		dispatch(delFavorite(id));
+		dispatch(updatePageVideosCreator(currentPage));
 	}
 	const openIfram = id => {
 		setVideoId(id);

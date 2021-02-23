@@ -20,6 +20,7 @@
       margin: 2px;
       max-width: 600px;
       max-height: 450px;
+
       // box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.4);
       .card-img {
         position: relative;
@@ -34,12 +35,16 @@
           top: 0;
           right: 0;
           z-index: 1;
+          width: 24px;
+          filter: drop-shadow(1px 1px 0.75rem crimson);
           cursor: pointer;
         }
       }
+
       .card-desc {
         flex: 1;
       }
+
       .tool-bar {
         display: flex;
         align-items: center;
