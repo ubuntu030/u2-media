@@ -12,7 +12,6 @@ const VideoList = () => {
 	const currentPage = useSelector(getCurrentPage);
 	const [isShowIfram, setIsShowIfram] = useState(false);
 	const [videoId, setVideoId] = useState('');
-
 	const handleAddFavorite = (item) => {
 		// console.log(item);
 		dispatch(toggleFavorite(item));

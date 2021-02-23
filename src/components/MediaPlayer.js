@@ -21,14 +21,10 @@ const VideoPlayer = (props) => {
 			console.log('onPlayerReady', this)
 		});
 		player.on("pause", function () {
-			console.log("pause");
 			setShowAd(true);
 		});
-
 		player.on("play", function () {
-			console.log("play");
 			setShowAd(false);
-
 		});
 		videoPlayer = player;
 		return () => player.dispose();
