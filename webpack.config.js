@@ -6,7 +6,7 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.scss$/,
+				test: /\.(scss|css)$/,
 				use: ["style-loader", "css-loader", "sass-loader"]
 			},
 			{
@@ -43,6 +43,10 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: path.resolve(__dirname, "src", "index.html"),
 		}),
-		new webpack.SourceMapDevToolPlugin({})
+		new webpack.SourceMapDevToolPlugin({}),
+		new webpack.EnvironmentPlugin({
+			NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+			DEBUG: true,
+		})
 	]
 }
