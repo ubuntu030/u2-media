@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getPageVideos, addFavorite, toggleFavorite, updatePageVideosCreator, setPlayerDisplay, updateVideoInfo, getCurrentPage } from "../store";
+import { getPageVideos, toggleFavorite, updatePageVideosCreator, setPlayerDisplay, updateVideoInfo, getCurrentPage } from "../store";
 
 import IframWindow from "./IframWindow";
 import "./videoList.scss";
@@ -42,13 +42,14 @@ const VideoList = () => {
 }
 
 const Card = (props) => {
-	const { id, title, description, thumbnails, like } = props.info;
+	const { id, title, description, thumbnails, like, duration_formate: { frmtTime } } = props.info;
 	const { favoriteCb, openIframCb, openPlayerCb } = props;
 	return (
 		<div className="card">
 			<div className="card-img">
 				<img src={thumbnails.url} alt={title} />
 				<img className="like-btn" onClick={() => favoriteCb(props.info)} src={`src/public/${like ? 'red-love.png' : 'gray-love.png'}`} alt="" />
+				<div className="duration-time">{frmtTime}</div>
 				{/* <button className="like-btn" onClick={() => favoriteCb(props.info)}>favorite</button> */}
 			</div>
 			<div className="card-title">

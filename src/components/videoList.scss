@@ -39,6 +39,14 @@
           filter: drop-shadow(1px 1px 0.75rem crimson);
           cursor: pointer;
         }
+
+        .duration-time {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          padding: 4px;
+          background: #00000066;
+        }
       }
 
       .card-desc {
