@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getPageVideos, addFavorite, setPlayerDisplay } from "../store";
+import { getPageVideos, addFavorite, setPlayerDisplay, updateVideoInfo } from "../store";
 
 import IframWindow from "./IframWindow";
 import "./videoList.scss";
@@ -21,7 +21,8 @@ const VideoList = () => {
 		setIsShowIfram(true);
 	}
 
-	const openPlayer = () => {
+	const openPlayer = (info) => {
+		dispatch(updateVideoInfo(info))
 		dispatch(setPlayerDisplay(true));
 	}
 
@@ -56,7 +57,7 @@ const Card = (props) => {
 			</div>
 			<div className="tool-bar">
 				<img src="src/public/icons8-youtube.svg" alt="youtube" onClick={() => openIframCb(id)} />
-				<img src="src/public/player-play.png" alt="youtube" onClick={openPlayerCb} />
+				<img src="src/public/player-play.png" alt="youtube" onClick={() => openPlayerCb(props.info)} />
 			</div>
 		</div>
 	)
