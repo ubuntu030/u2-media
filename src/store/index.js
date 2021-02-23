@@ -13,7 +13,8 @@ const initialState = {
 	totalPage: 0,
 	favoriteList: {},
 	isFavoriteOpen: false,
-	isPlayerOpen: false
+	isPlayerOpen: false,
+	videoInfo: null,
 };
 /**
  * reducer
@@ -71,6 +72,8 @@ const rootReducer = (state = initialState, action) => {
 			return { ...state, isFavoriteOpen: action.payload }
 		case SET_PLAYER_DISPLAY:
 			return { ...state, isPlayerOpen: action.payload };
+		case UPDATE_VIDEO_INFO:
+			return { ...state, videoInfo: action.payload }
 		default:
 			return state;
 	}
@@ -89,6 +92,7 @@ export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DEL_FAVORITE = 'DEL_FAVORITE';
 export const SET_FAVORITE_DISPLAY = 'SET_FAVORITE_DISPLAY';
 export const SET_PLAYER_DISPLAY = 'SET_PLAYER_DISPLAY';
+export const UPDATE_VIDEO_INFO = 'UPDATE_VIDEO_INFO';
 
 /**
  * selectors
@@ -100,6 +104,7 @@ export const getTotalPage = state => state.totalPage;
 export const getFavoriteList = state => state.favoriteList;
 export const getIsFavoriteOpen = state => state.isFavoriteOpen;
 export const getIsPlayerOpen = state => state.isPlayerOpen;
+export const getVideoInfo = state => state.videoInfo;
 
 /**
  * action creator
@@ -174,6 +179,12 @@ export const setPlayerDisplay = (isShow = false) => {
 	return {
 		type: SET_PLAYER_DISPLAY,
 		payload: isShow
+	}
+}
+export const updateVideoInfo = (info) => {
+	return {
+		type: UPDATE_VIDEO_INFO,
+		payload: info
 	}
 }
 
