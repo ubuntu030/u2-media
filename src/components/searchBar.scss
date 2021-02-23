@@ -1,0 +1,39 @@
+.search-bar-container {
+  $background: rgba($color: #505050, $alpha: 0.7);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: all .2s ease;
+
+  &.drawer-hidden {
+    background: $background;
+    top: -35px;
+  }
+
+  .search-part {
+    display: flex;
+    background: $background;
+    backdrop-filter: blur(2px);
+    padding: 7px;
+
+    img {
+      padding: 0 2px;
+			cursor: pointer;
+    }
+  }
+
+  .toggle-part {
+    background: $background;
+    backdrop-filter: blur(2px);
+    position: absolute;
+    right: 0;
+    width: 60px;
+    height: 30px;
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
+    text-align: center;
+    color: #fff;
+    user-select: none;
+  }
+}
