@@ -19,3 +19,19 @@ export const fetchVideoList = async (nextPageToken) => {
 		throw error;
 	}
 }
+
+export const fetchVideosDuration = async (keys = []) => {
+	const ids = keys.join(',');
+	const url = `https://www.googleapis.com/youtube/v3/videos?id=${ids}&part=contentDetails&key=${YOUTUBE_API_KEY}`;
+	try {
+		const result = await (await fetch(url)).json();
+		console.log(result);
+		if (result && result.error) {
+			throw result.error;
+		}
+		return result;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
