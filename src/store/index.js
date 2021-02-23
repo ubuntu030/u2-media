@@ -32,7 +32,8 @@ const rootReducer = (state = initialState, action) => {
 					id: item.id.videoId,
 					title: snippet.title,
 					description: snippet.description,
-					thumbnails: snippet.thumbnails.medium
+					thumbnails: snippet.thumbnails.medium,
+					like: false
 				}
 			});
 			// console.log(videoList);
@@ -58,15 +59,37 @@ const rootReducer = (state = initialState, action) => {
 			console.log('[pageVideos]', pageVideos);
 			return { ...state, pageVideos: pageVideos }
 		}
-		case ADD_FAVORITE:
+		case ADD_FAVORITE: {
 			const { payload } = action;
-			return { ...state, favoriteList: { ...state.favoriteList, [payload.id]: payload } }
+			const nList = state.videoList.map(item => {
+				if (payload.id === item.id) {
+					item.like = !item.like;
+				}
+				return item;
+			});
+			// TODO: 優化並避免維護兩分資料
+			return {
+				...state,
+				videoList: [...nList],
+				favoriteList: { ...state.favoriteList, [payload.id]: payload }
+			}
+		}
 		case DEL_FAVORITE: {
 			// https://stackoverflow.com/questions/34401098/remove-a-property-in-an-object-immutably
 			const id = action.payload;
 			let { [id]: value, ...restObj } = state.favoriteList;
-			// console.log(restObj);
-			return { ...state, favoriteList: restObj };
+			// TODO: 優化並避免維護兩分資料
+			const nList = state.videoList.map(item => {
+				if (id === item.id) {
+					item.like = false;
+				}
+				return item;
+			});
+			return {
+				...state,
+				videoList: [...nList],
+				favoriteList: restObj
+			};
 		}
 		case SET_FAVORITE_DISPLAY:
 			return { ...state, isFavoriteOpen: action.payload }
