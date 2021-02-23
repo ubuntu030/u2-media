@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getPageVideos, addFavorite } from "../store";
+import { getPageVideos, addFavorite, setPlayerDisplay } from "../store";
 
 import IframWindow from "./IframWindow";
 import "./videoList.scss";
@@ -20,12 +20,17 @@ const VideoList = () => {
 		setVideoId(id);
 		setIsShowIfram(true);
 	}
+
+	const openPlayer = () => {
+		dispatch(setPlayerDisplay(true));
+	}
+
 	return (
 		<>
 			<div className="video-list-container">
 				<div className="gallery">
 					{
-						videoList.map(info => <Card key={info.id} info={info} favoriteCb={handleAddFavorite} openIframCb={openIfram} />)
+						videoList.map(info => <Card key={info.id} info={info} favoriteCb={handleAddFavorite} openIframCb={openIfram} openPlayerCb={openPlayer} />)
 					}
 				</div>
 			</div>
@@ -36,7 +41,7 @@ const VideoList = () => {
 
 const Card = (props) => {
 	const { id, title, description, thumbnails } = props.info;
-	const { favoriteCb, openIframCb } = props;
+	const { favoriteCb, openIframCb, openPlayerCb } = props;
 	return (
 		<div className="card">
 			<div className="card-img">
@@ -51,6 +56,7 @@ const Card = (props) => {
 			</div>
 			<div className="tool-bar">
 				<img src="src/public/icons8-youtube.svg" alt="youtube" onClick={() => openIframCb(id)} />
+				<img src="src/public/player-play.png" alt="youtube" onClick={openPlayerCb} />
 			</div>
 		</div>
 	)
