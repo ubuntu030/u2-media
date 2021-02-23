@@ -9,7 +9,7 @@ const IframWindow = (props) => {
 		display ?
 			<div className="iframwindow-container">
 				<div className="control-bar">
-					<button onClick={closeCb}>close</button>
+					<img onClick={closeCb} src="src/public/macos-close.png" alt="macos-close" />
 				</div>
 				<div className="ifram-section">
 					<iframe className="u2-video" src={url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
