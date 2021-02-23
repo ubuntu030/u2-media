@@ -5,6 +5,8 @@ import videojs from 'video.js';
 import "video.js/dist/video-js.css";
 import "./mediaplayer.scss"
 
+let videoPlayer = null;
+
 const VideoPlayer = (props) => {
 	const { setShowAd } = props;
 	const videoRef = useRef(null);
@@ -25,7 +27,7 @@ const VideoPlayer = (props) => {
 			setShowAd(false);
 
 		});
-
+		videoPlayer = player;
 		return () => player.dispose();
 	}, [])
 
@@ -48,11 +50,17 @@ const MediaPlayer = () => {
 		}]
 	}
 
+	const play = ()=> {
+		if (videoPlayer && typeof videoPlayer.play === 'function') {
+			videoPlayer.play();
+		}
+	}
+
 	return (
 
 		<main className="media-player-container">
 			<div className="album-pic">
-				<div className={`video-advertise ${showAd ? '' : 'hidden'}`}>
+				<div onClick={play} className={`video-advertise ${showAd ? '' : 'hidden'}`}>
 					<div className="content">
 						<img src="src/public/advitise_img.jpg" alt="advitise-img" />
 						<p className="ad-title">
