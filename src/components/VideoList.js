@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getPageVideos, addFavorite, updatePageVideosCreator, setPlayerDisplay, updateVideoInfo, getCurrentPage } from "../store";
+import { getPageVideos, addFavorite, toggleFavorite, updatePageVideosCreator, setPlayerDisplay, updateVideoInfo, getCurrentPage } from "../store";
 
 import IframWindow from "./IframWindow";
 import "./videoList.scss";
@@ -15,7 +15,7 @@ const VideoList = () => {
 
 	const handleAddFavorite = (item) => {
 		// console.log(item);
-		dispatch(addFavorite(item));
+		dispatch(toggleFavorite(item));
 		dispatch(updatePageVideosCreator(currentPage));
 	}
 	const openIfram = id => {
