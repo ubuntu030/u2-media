@@ -24,6 +24,15 @@ const FavoriteList = () => {
 		setVideoId(id);
 		setIsShowIfram(true);
 	}
+	const openPlayer = info => {
+		dispatch(updateVideoInfo(info))
+		dispatch(setPlayerDisplay(true));
+	}
+	const cardProps = {
+		delCallback: delFavoriteCb,
+		openIframCb: openIfram,
+		openPlayerCb: openPlayer
+	}
 
 	return (
 		<>
@@ -37,7 +46,7 @@ const FavoriteList = () => {
 							Object.values(favoriteList).map(item => {
 								return (
 									<li key={item.id}>
-										<Card info={item} delCallback={delFavoriteCb} openIframCb={openIfram} />
+										<Card info={item} {...cardProps} />
 									</li>
 								)
 							})
@@ -52,7 +61,7 @@ const FavoriteList = () => {
 
 const Card = (props) => {
 	const { info } = props;
-	const { delCallback, openIframCb } = props;
+	const { delCallback, openIframCb, openPlayerCb } = props;
 	return (
 		<div className="favorite-card">
 			<div className="img-ctn">
