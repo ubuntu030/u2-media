@@ -15,21 +15,20 @@ const Pagination = () => {
 		dispatch(updatePageVideosCreator(pageNum));
 	}
 
-
 	return (
 		<nav className="pagination-container">
 			<ul className="list">
-				{createItem(handleItemClick, totalPageNum)}
+				{createItem(handleItemClick, totalPageNum, currentPage)}
 			</ul>
 		</nav>
 	)
 }
 
-const createItem = (handleItemClick, totalPageNum = 0) => {
+const createItem = (handleItemClick, totalPageNum = 0, currentPage = 1) => {
 	let itemElms = [];
 	for (let index = 0; index < totalPageNum; index++) {
 		itemElms.push(
-			<li className="item" key={index} onClick={() => handleItemClick(index + 1)}>
+			<li className={`item ${currentPage - 1 === index ? "selected" : ''}`} key={index} onClick={() => handleItemClick(index + 1)}>
 				<a href="#">{index + 1}</a>
 			</li>
 		)
