@@ -19,9 +19,25 @@
     height: inherit;
 
     .favorite-card {
+      position: relative;
       display: flex;
       flex-direction: row;
 
+      .info-ctn {
+        flex: 1;
+        padding: 5px;
+      }
+
+      .control-bar {
+        display: flex;
+        flex-direction: column;
+
+        img {
+          width: 32px;
+          cursor: pointer;
+          margin: 2px;
+        }
+      }
     }
   }
 

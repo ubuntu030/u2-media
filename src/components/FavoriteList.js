@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import IframWindow from "./IframWindow";
+
 import { getFavoriteList, getIsFavoriteOpen } from "../store";
-import { setFavoriteDisplay, delFavorite } from "../store";
+import { setFavoriteDisplay, delFavorite, setPlayerDisplay, updateVideoInfo } from "../store";
 
 import "./favoriteList.scss"
 
 const FavoriteList = () => {
 	const dispatch = useDispatch();
+	const [isShowIfram, setIsShowIfram] = useState(false);
+	const [videoId, setVideoId] = useState('');
 	const favoriteList = useSelector(getFavoriteList);
 	const isOpen = useSelector(getIsFavoriteOpen);
 	const handleDisplayClick = () => {
@@ -15,6 +19,10 @@ const FavoriteList = () => {
 	}
 	const delFavoriteCb = (id) => {
 		dispatch(delFavorite(id));
+	}
+	const openIfram = id => {
+		setVideoId(id);
+		setIsShowIfram(true);
 	}
 
 	return (
@@ -29,7 +37,7 @@ const FavoriteList = () => {
 							Object.values(favoriteList).map(item => {
 								return (
 									<li key={item.id}>
-										<Card info={item} delCallback={delFavoriteCb} />
+										<Card info={item} delCallback={delFavoriteCb} openIframCb={openIfram} />
 									</li>
 								)
 							})
@@ -37,28 +45,29 @@ const FavoriteList = () => {
 					</ul>
 				</div>
 			</section>
+			<IframWindow display={isShowIfram} id={videoId} closeCb={() => setIsShowIfram(false)} />
 		</>
 	)
 }
 
 const Card = (props) => {
 	const { info } = props;
-	const { delCallback } = props;
+	const { delCallback, openIframCb } = props;
 	return (
 		<div className="favorite-card">
 			<div className="img-ctn">
 				<img src={info.thumbnails.url} alt={info.title} />
 			</div>
 			<div className="info-ctn">
-				<div>
-					<h2>{info.title}</h2>
-				</div>
+				<h2>{info.title}</h2>
 				<div>
 					<p>{info.description}</p>
 				</div>
 			</div>
-			<div>
-				<button onClick={() => delCallback(info.id)}>remove</button>
+			<div className="control-bar">
+				<img src="src/public/trash-can.png" className="trash-can" onClick={() => delCallback(info.id)} alt="trash-can" />
+				<img src="src/public/icons8-youtube.svg" alt="youtube" onClick={() => openIframCb(info.id)} />
+				<img src="src/public/player-play.png" alt="player" onClick={() => openPlayerCb(props.info)} />
 			</div>
 		</div>
 	)
