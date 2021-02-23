@@ -37,7 +37,12 @@ const rootReducer = (state = initialState, action) => {
 				}
 			});
 			// console.log(videoList);
-			return { ...state, loading: false, nextPageToken, videoList };
+			return {
+				...state,
+				loading: false,
+				nextPageToken,
+				videoList: [...state.videoList, ...videoList]
+			};
 		}
 		case FETCH_VIDEO_LIST_ERROR:
 			return { ...state, loading: false };
@@ -163,23 +168,26 @@ export const getVideoInfo = state => state.videoInfo;
  */
 export function fetchVideoListCreator() {
 	return (dispatch, getState) => {
-		dispatch({
-			type: FETCH_VIDEO_LIST_PADDING,
-		});
-		fetchVideoList().then(data => {
+		const { videoList, currentPage, totalPage, nextPageToken } = getState();
+		if (videoList.length === 0 || ((currentPage === totalPage) && videoList.length < 100)) {
 			dispatch({
-				type: FETCH_VIDEO_LIST_SUCCESS,
-				payload: data
+				type: FETCH_VIDEO_LIST_PADDING,
 			});
-			// 建立分頁
-			dispatch(createPagesCreator());
-		}).catch(error => {
-			console.error(error);
-			dispatch({
-				type: FETCH_VIDEO_LIST_ERROR,
-				error: error
+			fetchVideoList(nextPageToken).then(data => {
+				dispatch({
+					type: FETCH_VIDEO_LIST_SUCCESS,
+					payload: data
+				});
+				// 建立分頁
+				dispatch(createPagesCreator());
+			}).catch(error => {
+				console.error(error);
+				dispatch({
+					type: FETCH_VIDEO_LIST_ERROR,
+					error: error
+				});
 			});
-		});
+		}
 	}
 }
 // 建立總頁數

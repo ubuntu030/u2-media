@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getCurrentPage, getTotalPage } from "../store";
-import { updateCurrentPage, updatePageVideosCreator } from "../store";
+import { updateCurrentPage, updatePageVideosCreator, fetchVideoListCreator } from "../store";
 import "./pagination.scss";
 
 const Pagination = () => {
@@ -13,6 +13,8 @@ const Pagination = () => {
 	const handleItemClick = (pageNum) => {
 		dispatch(updateCurrentPage(pageNum));
 		dispatch(updatePageVideosCreator(pageNum));
+		// 點選頁籤決定是否更新新的資料
+		dispatch(fetchVideoListCreator());
 	}
 
 	return (
