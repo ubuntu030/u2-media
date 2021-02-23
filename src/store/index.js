@@ -2,9 +2,11 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { throttle } from "lodash";
 
+import { convert_time } from "../utils";
+
 
 import { loadState, saveState } from "../localStorage";
-import { fetchVideoList } from "../u2_api";
+import { fetchVideoList, fetchVideosDuration } from "../u2_api";
 
 const persistedState = loadState();
 const initialState = {
@@ -42,7 +44,9 @@ const rootReducer = (state = initialState, action) => {
 					title: snippet.title,
 					description: snippet.description,
 					thumbnails: snippet.thumbnails.medium,
-					like: initLike
+					like: initLike,
+					duration_formate: item.duration_formate,
+					duration: item.duration
 				}
 			});
 			// console.log(videoList);
@@ -176,26 +180,45 @@ export const getVideoInfo = state => state.videoInfo;
  * action creator
  */
 export function fetchVideoListCreator() {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		const { videoList, currentPage, totalPage, nextPageToken } = getState();
 		if (videoList.length === 0 || ((currentPage === totalPage) && videoList.length < 100)) {
-			dispatch({
-				type: FETCH_VIDEO_LIST_PADDING,
-			});
-			fetchVideoList(nextPageToken).then(data => {
+			try {
+				const result = await fetchVideoList(nextPageToken);
+				const keys = result.items.map(item => item.id.videoId);
+				const resultDuration = await fetchVideosDuration(keys);
+
+				const sortByKey = {};
+				const items = resultDuration.items;
+				for (let index = 0; index < items.length; index++) {
+					sortByKey[items[index].id] = items[index];
+				}
+
+				let videoId = '';
+				let duration = '';
+				const newItem = result.items.map(item => {
+					videoId = item.id.videoId;
+					duration = sortByKey[videoId].contentDetails.duration;
+					item.duration_formate = convert_time(duration);
+					item.duration = duration;
+					return item;
+				});
+
 				dispatch({
 					type: FETCH_VIDEO_LIST_SUCCESS,
-					payload: data
+					payload: { ...result, items: newItem }
 				});
 				// 建立分頁
 				dispatch(createPagesCreator());
-			}).catch(error => {
+
+			} catch (error) {
 				console.error(error);
 				dispatch({
 					type: FETCH_VIDEO_LIST_ERROR,
 					error: error
 				});
-			});
+			}
+
 		}
 	}
 }
