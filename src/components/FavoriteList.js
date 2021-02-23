@@ -35,17 +35,23 @@ const FavoriteList = () => {
 		openIframCb: openIfram,
 		openPlayerCb: openPlayer
 	}
-
+	const favoriteArr = Object.values(favoriteList);
 	return (
 		<>
 			<div onClick={handleDisplayClick} className="favorite-display-icon">
 				<img src={`src/public/${isOpen ? 'gray' : 'red'}-favorite-database-48.png`} alt="favorite-database" />
+				{
+					favoriteArr.length > 0 ?
+						<div className={`count ${isOpen ? "openColor" : ""}`}>
+							<p>{favoriteArr.length}</p>
+						</div> : null
+				}
 			</div>
 			<section className={`favorite-list-container ${isOpen ? '' : 'hidden'}`}>
 				<div className="favorite-list" >
 					<ul>
 						{
-							Object.values(favoriteList).map(item => {
+							Object.values(favoriteArr).map(item => {
 								return (
 									<li key={item.id}>
 										<Card info={item} {...cardProps} />

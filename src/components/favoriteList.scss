@@ -56,4 +56,23 @@
   cursor: pointer;
   color: white;
   z-index: 3;
+
+  .count {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    background: #333;
+    color: #e74c3c;
+    &.openColor {
+      color: #ccc;
+    }
+ 
+  }
 }
