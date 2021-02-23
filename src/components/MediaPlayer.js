@@ -76,8 +76,7 @@ const MediaPlayer = () => {
 						<div className="content">
 							<img src="src/public/advitise_img.jpg" alt="advitise-img" />
 							<p className="ad-title">
-								覺得人生不順利嗎？照照鏡子你就知道原因了。
-						</p>
+							</p>
 						</div>
 					</div>
 					<VideoPlayer {...videoJsOptions} setShowAd={setShowAd} />
