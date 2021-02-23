@@ -71,9 +71,7 @@ const Card = (props) => {
 			</div>
 			<div className="info-ctn">
 				<h2>{info.title}</h2>
-				<div>
-					<p>{info.description}</p>
-				</div>
+				<p className="desc">{info.description}</p>
 			</div>
 			<div className="control-bar">
 				<img src="src/public/trash-can.png" className="trash-can" onClick={() => delCallback(info.id)} alt="trash-can" />
