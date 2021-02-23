@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import videojs from 'video.js';
 
-import { getIsPlayerOpen, setPlayerDisplay } from "../store";
+import { getIsPlayerOpen, setPlayerDisplay, getVideoInfo } from "../store";
 
 import "video.js/dist/video-js.css";
 import "./mediaplayer.scss"
@@ -47,6 +47,7 @@ const MediaPlayer = () => {
 	const [showAd, setShowAd] = useState(false);
 	const dispatch = useDispatch();
 	const isShow = useSelector(getIsPlayerOpen);
+	const videoInfo = useSelector(getVideoInfo);
 	const videoJsOptions = {
 		autoplay: true,
 		controls: true,
@@ -64,12 +65,11 @@ const MediaPlayer = () => {
 		dispatch(setPlayerDisplay(false));
 	}
 
-
 	return (
 		isShow ?
 			<main className="media-player-container">
 				<div className="control-bar">
-					<img onClick={close} src="src/public/macos-close.png" alt="macos-close"/>
+					<img onClick={close} src="src/public/macos-close.png" alt="macos-close" />
 				</div>
 				<div className="album-pic">
 					<div onClick={play} className={`video-advertise ${showAd ? '' : 'hidden'}`}>
@@ -81,6 +81,12 @@ const MediaPlayer = () => {
 						</div>
 					</div>
 					<VideoPlayer {...videoJsOptions} setShowAd={setShowAd} />
+				</div>
+				<div className="video-info">
+					<h2>{videoInfo.title}</h2>
+					<div>
+						<p>{videoInfo.description}</p>
+					</div>
 				</div>
 			</main> : null
 	)
