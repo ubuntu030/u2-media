@@ -74,6 +74,7 @@ const Card = (props) => {
 		<div className="favorite-card">
 			<div className="img-ctn">
 				<img src={info.thumbnails.url} alt={info.title} />
+				<div className="duration-time">{info.duration_formate.frmtTime}</div>
 			</div>
 			<div className="info-ctn">
 				<h2>{info.title}</h2>

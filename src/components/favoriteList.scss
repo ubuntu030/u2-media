@@ -18,17 +18,22 @@
     overflow-y: auto;
     height: inherit;
 
-    .img-ctn {
-      // img {
-      //   width: 100%;
-      //   height: auto;
-      // }
-    }
-
     .favorite-card {
       position: relative;
       display: flex;
       flex-direction: row;
+
+      .img-ctn {
+        position: relative;
+
+        .duration-time {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          padding: 4px;
+          background: #00000066;
+        }
+      }
 
       .info-ctn {
         flex: 1;
