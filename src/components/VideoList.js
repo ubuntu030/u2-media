@@ -57,7 +57,7 @@ const Card = (props) => {
 			</div>
 			<div className="tool-bar">
 				<img src="src/public/icons8-youtube.svg" alt="youtube" onClick={() => openIframCb(id)} />
-				<img src="src/public/player-play.png" alt="youtube" onClick={() => openPlayerCb(props.info)} />
+				<img src="src/public/player-play.png" alt="player" onClick={() => openPlayerCb(props.info)} />
 			</div>
 		</div>
 	)
