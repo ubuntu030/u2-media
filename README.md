@@ -1,8 +1,13 @@
 # u2-media
 
-串接 youtube API，搜尋影片
+串接 youtube API，實作影片搜尋、收藏、media Player
 
 ![alt text](https://github.com/ubuntu030/u2-media/blob/master/src/public/review.png)
+
+## 使用技術:
+* ReactJS
+* Redux
+* SCSS
 
 ## 功能
 
