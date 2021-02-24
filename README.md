@@ -2,6 +2,8 @@
 
 串接 youtube API，實作影片搜尋、收藏、media Player
 
+demo: https://youtu.be/o3dDs9vnB-c
+
 ![alt text](https://github.com/ubuntu030/u2-media/blob/master/src/public/review.png)
 
 ## 使用技術:
