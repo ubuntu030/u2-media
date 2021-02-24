@@ -21,6 +21,7 @@ const initialState = {
 	isFavoriteOpen: false,
 	isPlayerOpen: false,
 	videoInfo: null,
+	searchText: 'surfing',
 };
 /**
  * reducer
@@ -30,7 +31,7 @@ const rootReducer = (state = initialState, action) => {
 		case FETCH_VIDEO_LIST_PADDING:
 			return { ...state, loading: true };
 		case FETCH_VIDEO_LIST_SUCCESS: {
-			const { items, nextPageToken } = action.payload;
+			const { items, nextPageToken, forceUpdate } = action.payload;
 			const favoriteKeys = Object.keys(state.favoriteList);
 			let snippet = null;
 			let initLike = false;
@@ -49,12 +50,16 @@ const rootReducer = (state = initialState, action) => {
 					duration: item.duration
 				}
 			});
-			// console.log(videoList);
+
+			let newList = videoList;
+			if (!forceUpdate) {
+				newList = [...state.videoList, ...videoList]
+			}
 			return {
 				...state,
 				loading: false,
 				nextPageToken,
-				videoList: [...state.videoList, ...videoList]
+				videoList: newList
 			};
 		}
 		case FETCH_VIDEO_LIST_ERROR:
@@ -143,6 +148,8 @@ const rootReducer = (state = initialState, action) => {
 			return { ...state, isPlayerOpen: action.payload };
 		case UPDATE_VIDEO_INFO:
 			return { ...state, videoInfo: action.payload }
+		case UPDATE_SEARCH_TEXT:
+			return { ...state, searchText: action.payload }
 		default:
 			return state;
 	}
@@ -163,6 +170,7 @@ export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
 export const SET_FAVORITE_DISPLAY = 'SET_FAVORITE_DISPLAY';
 export const SET_PLAYER_DISPLAY = 'SET_PLAYER_DISPLAY';
 export const UPDATE_VIDEO_INFO = 'UPDATE_VIDEO_INFO';
+export const UPDATE_SEARCH_TEXT = 'UPDATE_SEARCH_TEXT';
 
 /**
  * selectors
@@ -175,16 +183,24 @@ export const getFavoriteList = state => state.favoriteList;
 export const getIsFavoriteOpen = state => state.isFavoriteOpen;
 export const getIsPlayerOpen = state => state.isPlayerOpen;
 export const getVideoInfo = state => state.videoInfo;
+export const getSearchText = state => state.searchText;
 
 /**
  * action creator
  */
-export function fetchVideoListCreator() {
+export function fetchVideoListCreator({ queryString, forceUpdate = false }) {
 	return async (dispatch, getState) => {
 		const { videoList, currentPage, totalPage, nextPageToken } = getState();
-		if (videoList.length === 0 || ((currentPage === totalPage) && videoList.length < 100)) {
+		console.log(videoList.length === 0 || ((currentPage === totalPage) && videoList.length < 100));
+		if (forceUpdate
+			|| videoList.length === 0
+			|| ((currentPage === totalPage) && videoList.length < 100)) {
 			try {
-				const result = await fetchVideoList(nextPageToken);
+				const param = {
+					nextPageToken,
+					queryString
+				}
+				const result = await fetchVideoList(param);
 				const keys = result.items.map(item => item.id.videoId);
 				const resultDuration = await fetchVideosDuration(keys);
 
@@ -206,7 +222,7 @@ export function fetchVideoListCreator() {
 
 				dispatch({
 					type: FETCH_VIDEO_LIST_SUCCESS,
-					payload: { ...result, items: newItem }
+					payload: { ...result, items: newItem, queryString: queryString, forceUpdate }
 				});
 				// 建立分頁
 				dispatch(createPagesCreator());
@@ -283,6 +299,12 @@ export const updateVideoInfo = (info) => {
 	return {
 		type: UPDATE_VIDEO_INFO,
 		payload: info
+	}
+}
+export const updateSearchText = (text) => {
+	return {
+		type: UPDATE_SEARCH_TEXT,
+		payload: text
 	}
 }
 

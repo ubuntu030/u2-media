@@ -16,7 +16,7 @@ const App = () => {
 	const pageVideos = useSelector(getPageVideos);
 
 	useEffect(() => {
-		dispatch(fetchVideoListCreator());
+		dispatch(fetchVideoListCreator({ queryString: 'surfing' }));
 	}, []);
 
 	return (
