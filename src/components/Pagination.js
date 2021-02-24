@@ -22,7 +22,7 @@ const Pagination = () => {
 		dispatch(updatePerPageNum(switchPageNum));
 		dispatch(createPagesCreator());
 		dispatch(updateCurrentPage(1));
-		// dispatch(updatePageVideosCreator(1));
+		dispatch(updatePageVideosCreator(1));
 	}
 
 
