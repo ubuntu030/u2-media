@@ -187,6 +187,7 @@ export const getIsFavoriteOpen = state => state.isFavoriteOpen;
 export const getIsPlayerOpen = state => state.isPlayerOpen;
 export const getVideoInfo = state => state.videoInfo;
 export const getSearchText = state => state.searchText;
+export const getIsLoading = state => state.loading;
 
 /**
  * action creator
@@ -198,6 +199,9 @@ export function fetchVideoListCreator({ queryString, forceUpdate = false }) {
 		if (forceUpdate
 			|| videoList.length === 0
 			|| ((currentPage === totalPage) && videoList.length < 100)) {
+			dispatch({
+				type: FETCH_VIDEO_LIST_PADDING,
+			});
 			try {
 				const param = {
 					nextPageToken,
@@ -222,7 +226,6 @@ export function fetchVideoListCreator({ queryString, forceUpdate = false }) {
 					item.duration = duration;
 					return item;
 				});
-
 				dispatch({
 					type: FETCH_VIDEO_LIST_SUCCESS,
 					payload: { ...result, items: newItem, queryString: queryString, forceUpdate }
