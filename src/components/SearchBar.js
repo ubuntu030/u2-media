@@ -21,7 +21,7 @@ const SearchBar = () => {
 				<img onClick={handleSearch} src="src/public/search.png" alt="search" />
 			</div>
 			<div onClick={() => setIsDisplay(!isDisplay)} className="toggle-part">
-				toggle!
+				{isDisplay ? 'hidden' : 'search!'}
 			</div>
 		</section>
 	)
