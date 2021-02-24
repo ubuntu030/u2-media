@@ -82,6 +82,8 @@ const rootReducer = (state = initialState, action) => {
 			console.log('[pageVideos]', pageVideos);
 			return { ...state, pageVideos: pageVideos }
 		}
+		case UPDATE_PERPAGE_NUM:
+			return { ...state, perPageNum: action.payload }
 		case ADD_FAVORITE: {
 			const { payload } = action;
 			const nList = state.videoList.map(item => {
@@ -164,6 +166,7 @@ export const FETCH_VIDEO_LIST_ERROR = 'FETCH_VIDEO_LIST_ERROR';
 export const UPDATE_PAGE_VIDEOS = 'UPDATE_PAGE_VIDEOS';
 export const CREATE_PAGES = 'CREATE_PAGES';
 export const UPDATE_CURRENT_PAGE = 'UPDATE_CURRENT_PAGE';
+export const UPDATE_PERPAGE_NUM = 'UPDATE_PERPAGE_NUM';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DEL_FAVORITE = 'DEL_FAVORITE';
 export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
@@ -262,6 +265,13 @@ export const updateCurrentPage = pageNum => {
 	return {
 		type: UPDATE_CURRENT_PAGE,
 		payload: pageNum
+	}
+}
+export const updatePerPageNum = pageNum => {
+	pageNum = Number(pageNum);
+	return {
+		type: UPDATE_PERPAGE_NUM,
+		payload: (24 >= pageNum && pageNum >= 6) ? pageNum : 12
 	}
 }
 // 新增最愛
