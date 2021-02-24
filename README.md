@@ -8,7 +8,7 @@
 * ReactJS
 * Redux
 * SCSS
-* RWD 
+* RWD-design
 
 ## 功能
 
