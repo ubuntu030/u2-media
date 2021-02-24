@@ -5,11 +5,45 @@
   justify-content: center;
   align-items: center;
   height: 50px;
+  width: 100%;
+
+  .pages-setting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    button {
+      background: transparent;
+      color: $prime-color;
+      border: solid 2px $prime-color;
+      height: 70%;
+      width: 47px;
+      padding: 0 5px;
+      cursor: pointer;
+    }
+
+    input {
+      height: 70%;
+      border-block-color: #303030;
+      background: #0e0f0f54;
+      color: #ffffff;
+      width: 37px;
+
+      &:focus {
+        outline: none !important;
+        border: 1px solid $prime-color;
+        box-shadow: 0 0 10px #719ECE;
+      }
+    }
+
+  }
 
   .list {
     display: flex;
     flex-direction: row;
     list-style: none;
+    margin: auto;
 
     .item {
       display: flex;
@@ -44,7 +78,11 @@
 
 @media screen and (max-width:384px) {
   .pagination-container {
+    justify-content: flex-start;
+
     .list {
+      margin: inherit;
+
       .item {
         width: 23px
       }
