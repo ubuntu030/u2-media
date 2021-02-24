@@ -1,10 +1,17 @@
 import { YOUTUBE_API_KEY } from "./KEY";
 
-export const fetchVideoList = async (nextPageToken) => {
-	const param = `part=snippet&maxResults=50&type=video&q=surfing&videoDuration=short${'&pageToken=' + nextPageToken}`;
+const testurl = 'src/public/test.json';
+const test50url = 'src/public/search50.json';
+const testContent50rul = 'src/public/searchContent50.json';
+
+export const fetchVideoList = async ({ nextPageToken, queryString }) => {
+	const param = `part=snippet&maxResults=50&type=video&q=${queryString}&videoDuration=short${'&pageToken=' + nextPageToken}`;
 	const url = `https://youtube.googleapis.com/youtube/v3/search?${param}&key=${YOUTUBE_API_KEY}`;
 	// https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=YOUR_API_KEY
-	const testurl = 'src/public/test.json';
+	if (!queryString) {
+		return Promise.reject({ error: 'queryString empty' });
+	}
+
 	try {
 		const result = await (await fetch(url)).json();
 		console.log(result);
