@@ -1,0 +1,36 @@
+.loading-page-container {
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  background: rgba($color: #505050, $alpha: 0.8);
+  backdrop-filter: blur(5px);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+
+  .loader {
+    // loading style
+    border: 8px solid #323233;
+    /* Light grey */
+    border-top: 8px solid #3498db;
+    // border-right: 8px solid #3498db;
+    // border-bottom: 8px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 1.5s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
